@@ -4,6 +4,7 @@ const path = require("path");
 const mailparser = require("mailparser").simpleParser;
 const nodemailer = require("nodemailer");
 const SMTPServer = require("smtp-server").SMTPServer;
+const MailComposer = require("nodemailer/lib/mail-composer");
 
 class SMTP {
 
@@ -59,11 +60,22 @@ class SMTP {
 
 			onRcptTo (address, session, callback) {
 
+				if (address.endsWith(`@${t.options.host}`)) {
+
+					if (!t.userExists(address.replace(`@${t.options.host}`, ""))) {
+
+						callback(new Error("Non-fatal: Recipient does not exist."));
+						return;
+
+					}
+
+				}
+
 				if (!t.isBanned(address.address)) {
 
 					callback(null);
 
-				} else callback(new Error("Non-fatal: Banned recipient."))
+				} else callback(new Error("Non-fatal: Banned recipient."));
 
 			},
 
@@ -121,6 +133,12 @@ class SMTP {
 
 	}
 
+	userExists (username) {
+
+		return !!this.users.find(_ => _.username === username);
+
+	}
+
 	isBanned (address) {
 
 		return this.banned.indexOf(address) !== -1;
@@ -148,14 +166,22 @@ class SMTP {
 			}
 	
 		});
+		
+		const email = new MailComposer(data);
 
-		return transporter.sendMail(data);
+		await transporter.sendMail(data);
 
+		const original = await mailparser(email.compile().createReadStream());
+
+		db.addEmail(original);
+
+		return original;
+		
 	}
 
 	inboundEmail (email, session) {
 
-		if (this.isBanned(email.from.value[0])) return "Non-fatal: Banned recipient.";
+		if (this.isBanned(email.from.value[0])) return "Non-fatal: Banned sender.";
 
 		db.addEmail(email);
 
