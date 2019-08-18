@@ -1,0 +1,24 @@
+[
+
+	{
+
+		"username": "root"
+
+	},
+
+	{
+	
+		"username": "aurame",
+		"name": "Auguste Rame",
+		"aliases": ["root"],
+		
+		"password": {
+
+			"type": "plaintext",
+			"value": "testPassword"
+
+		}
+		
+	}
+
+]

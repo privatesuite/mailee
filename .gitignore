@@ -1,0 +1,10 @@
+# Vendor
+
+/node_modules
+
+# Other Files
+
+/database
+
+/mailee.pid
+/mailee.pid.lock
