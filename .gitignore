@@ -4,6 +4,8 @@
 
 # Other Files
 
+/logs
+/plugins
 /database
 
 /mailee.pid

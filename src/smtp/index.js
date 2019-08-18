@@ -101,9 +101,21 @@ class SMTP {
 
 		});
 
-		this.server.listen(this.options.port, this.options.host);
-
 		this.server.on("error", err => this.error(err));
+
+	}
+
+	listen () {
+
+		return new Promise(resolve => {
+
+			this.server.listen(this.options.port, this.options.host, () => {
+
+				resolve();
+
+			});
+
+		});
 
 	}
 	
