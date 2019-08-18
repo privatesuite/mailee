@@ -30,7 +30,7 @@ function start () {
 	child_process.spawn(process.execPath, [path.join(__dirname, "mailee_run.js")], {
 
 		detached: true,
-		stdio: ["ignore", process.stdout, process.stderr],
+		stdio: ["ignore", "ignore", "ignore"],
 		// stdio: "inherit"
 		
 	}).unref();

@@ -16,12 +16,6 @@ process.on("unhandledRejection", err => {
 
 });
 
-process.on("SIGKILL", () => {
-
-	process.exit();
-
-});
-
 // (--- --- START --- ---)
 
 const mailEE = require("../src");
