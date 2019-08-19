@@ -37,6 +37,8 @@ class SMTP {
 
 			// ciphers: ""
 
+			authOptional: true,
+
 			ca: this.options.caPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.caPath)) : undefined,
 			key: this.options.keyPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.keyPath)) : undefined,
 			cert: this.options.certPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.certPath)) : undefined,
