@@ -33,12 +33,15 @@ class SMTP {
 		this.server = new SMTPServer({
 		
 			secure: this.options.secure,
+			name: this.options.host,
 
 			ca: this.options.caPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.caPath)) : undefined,
 			key: this.options.keyPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.keyPath)) : undefined,
 			cert: this.options.keyPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.certPath)) : undefined,
 
 			onAuth (auth, session, callback) {
+
+				console.log(`Authentication for user ${auth.username} requested`);
 
 				if (!(session.secure || !this.options.tlsRequired)) {
 
@@ -67,12 +70,16 @@ class SMTP {
 
 			onConnect (session, callback) {
 
+				console.log(`Connection from ${session.clientHostname}/${session.remoteAddress}`);
+
 				callback(null);
 
 			},
 
 			onRcptTo (address, session, callback) {
 
+				console.log(`Email recipient ${address.address}.`)
+				
 				if (address.address.endsWith(`@${t.options.host}`)) {
 
 					if (!t.userExists(address.address.replace(`@${t.options.host}`, ""))) {
@@ -80,7 +87,7 @@ class SMTP {
 						callback(new Error("Non-fatal: Recipient does not exist."));
 						return;
 
-					}
+					} else callback(null);
 
 				}
 
@@ -93,6 +100,8 @@ class SMTP {
 			},
 
 			onMailFrom (address, session, callback) {
+
+				console.log(`Mail from ${address}`);
 
 				if (!t.isBanned(address.address)) {
 
