@@ -270,6 +270,8 @@ class SMTP {
 	 */
 	async inboundEmail (email, session) {
 
+		const t = this;
+
 		if (this.isBanned(email.from.value[0])) return "Non-fatal: Banned sender.";
 
 		db.addEmail(email);
@@ -295,9 +297,11 @@ class SMTP {
 
 					host: mx.get(domain),
 					port: 25,
-					name: this.options.host
+					name: t.options.host
 
 				});
+
+				console.log(t.options.host)
 
 				console.log(mapToObject(email.headers));
 
