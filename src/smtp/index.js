@@ -6,19 +6,19 @@ const mailparser = require("mailparser");
 const nodemailer = require("nodemailer");
 const SMTPServer = require("smtp-server").SMTPServer;
 
-function mapToObject (strMap) {
+// function mapToObject (strMap) {
 
-	let obj = Object.create(null);
-	for (let [k,v] of strMap) {
+// 	let obj = Object.create(null);
+// 	for (let [k,v] of strMap) {
 
-		obj[k] = v;
-		if (obj[k].text) obj[k] = obj[k].text;
+// 		obj[k] = v;
+// 		if (obj[k].text) obj[k] = obj[k].text;
 		
-	}
+// 	}
 	
-	return {...obj};
+// 	return {...obj};
 
-}
+// }
 
 class SMTP {
 
@@ -148,21 +148,13 @@ class SMTP {
 	listen () {
 
 		return new Promise(resolve => {
-
-			let i = 0;
-
-			for (const port of this.options.port) {
 			
-				this.server.listen(port, this.options.host, () => {
+			this.server.listen(this.options.port, this.options.host, () => {
 
-					console.log(`Listening on port ${port}`);
-					if (i === this.options.port.length) resolve();
+				console.log(`Listening on port ${this.options.port}`);
+				resolve();
 
-				});
-
-				i++;
-
-			}
+			});
 
 		});
 
@@ -217,7 +209,7 @@ class SMTP {
 		let transporter = nodemailer.createTransport({
 	
 			host: this.options.host,
-			port: this.options.port[0],
+			port: this.options.port,
 			// secure: this.options.secure,
 			auth: {
 
@@ -296,16 +288,14 @@ class SMTP {
 				const transport = nodemailer.createTransport({
 
 					host: mx.get(domain),
-					port: 25,
+					port: t.options.port,
 					name: t.options.host
 
 				});
 
-				console.log(t.options.host)
+				// console.log(mapToObject(email.headers));
 
-				console.log(mapToObject(email.headers));
-
-				mail.push(transport.sendMail(mapToObject(email.headers)));
+				mail.push(transport.sendMail(email));
 
 			}
 
