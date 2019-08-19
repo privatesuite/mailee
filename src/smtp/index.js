@@ -1,10 +1,23 @@
 const db = require("../db");
 const fs = require("fs");
+const dns = require("dns");
 const path = require("path");
-const mailparser = require("mailparser").simpleParser;
+const mailparser = require("mailparser");
 const nodemailer = require("nodemailer");
 const SMTPServer = require("smtp-server").SMTPServer;
-const MailComposer = require("nodemailer/lib/mail-composer");
+
+function mapToObject (strMap) {
+
+	let obj = Object.create(null);
+	for (let [k,v] of strMap) {
+
+		obj[k] = v;
+	
+	}
+	
+	return obj;
+
+}
 
 class SMTP {
 
@@ -60,9 +73,9 @@ class SMTP {
 
 			onRcptTo (address, session, callback) {
 
-				if (address.endsWith(`@${t.options.host}`)) {
+				if (address.address.endsWith(`@${t.options.host}`)) {
 
-					if (!t.userExists(address.replace(`@${t.options.host}`, ""))) {
+					if (!t.userExists(address.address.replace(`@${t.options.host}`, ""))) {
 
 						callback(new Error("Non-fatal: Recipient does not exist."));
 						return;
@@ -91,7 +104,7 @@ class SMTP {
 
 			async onData (stream, session, callback) {
 
-				const email = await mailparser(stream);
+				const email = await mailparser.simpleParser(stream);
 				const result = await t.inboundEmail(email, session);
 
 				if (result === true) callback(null);
@@ -109,11 +122,15 @@ class SMTP {
 
 		return new Promise(resolve => {
 
-			this.server.listen(this.options.port, this.options.host, () => {
+			for (const port of this.options.port) {
+			
+				this.server.listen(port, this.options.host, () => {
 
-				resolve();
+					resolve();
 
-			});
+				});
+
+			}
 
 		});
 
@@ -168,7 +185,7 @@ class SMTP {
 		let transporter = nodemailer.createTransport({
 	
 			host: this.options.host,
-			port: this.options.port,
+			port: this.options.port[0],
 			secure: this.options.secure,
 			auth: {
 
@@ -179,23 +196,82 @@ class SMTP {
 	
 		});
 		
-		const email = new MailComposer(data);
+		// const email = new MailComposer(data);
 
-		await transporter.sendMail(data);
+		// await transporter.sendMail(data);
 
-		const original = await mailparser(email.compile().createReadStream());
+		// const original = await mailparser(email.compile().createReadStream());
 
-		db.addEmail(original);
+		// db.addEmail(original);
 
-		return original;
+		// return original;
+
+		return transporter.sendMail(data);
 		
 	}
 
-	inboundEmail (email, session) {
+	/**
+	 * 
+	 * @param {string} domain 
+	 * 
+	 * @returns {dns.MxRecord[]} 
+	 */
+	mx (domain) {
+
+		return new Promise((resolve, reject) => {
+
+			dns.resolveMx(domain, (err, addresses) => {
+
+				if (err) reject(err);
+				else resolve(addresses);
+
+			});
+
+		});
+
+	}
+
+	/**
+	 * 
+	 * @param {mailparser.ParsedMail} email 
+	 * @param {*} session 
+	 */
+	async inboundEmail (email, session) {
 
 		if (this.isBanned(email.from.value[0])) return "Non-fatal: Banned sender.";
 
 		db.addEmail(email);
+
+		if (`${email.from.text}@${this.options.host}` === `${session.user}@${this.options.host}`) {
+
+			const mx = new Map();
+			const to = email.to.value;
+			const mail = [];
+
+			for (const recp of to) {
+				
+				const user = recp.address.split("@")[0];
+				const domain = recp.address.split("@")[1];
+
+				if (!mx.has(domain)) mx.set(domain, await this.mx(domain));
+
+				const transport = nodemailer.createTransport({
+
+					host: mx.get(domain),
+					port: 25,
+					name: this.options.host
+
+				});
+				
+				mail.push(transport.sendMail(mapToObject(email.headers)));
+
+			}
+
+			await Promise.all(mail);
+
+			return true;
+
+		}
 
 		return true;
 

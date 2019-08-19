@@ -1,12 +1,10 @@
 const SMTP = require("./smtp");
 
-const config = require("./utils/conf")(process.argv[2] || "dev");
-
 module.exports = {
 
 	SMTP,
 
-	createSMTP () {
+	createSMTP (config) {
 
 		return new SMTP({
 

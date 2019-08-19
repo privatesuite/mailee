@@ -6,14 +6,15 @@ const chalk = require("chalk").default;
 const utils = require("./utils");
 const child_process = require("child_process");
 
-if (!args.config) {
+// if (!args.config) {
 
-	console.error("Please specify a configuration file.");
-	return;
+// 	console.error("Please specify a configuration file.");
+// 	return;
 
-}
+// }
 
-const config = require("../src/utils/conf")(args.config);
+const confName = args.config || "dev";
+const config = require("../src/utils/conf")(confName);
 
 function start () {
 
@@ -27,7 +28,7 @@ function start () {
 
 	console.info(chalk.cyan("Starting MailEE..."));
 
-	child_process.spawn(process.execPath, [path.join(__dirname, "mailee_run.js")], {
+	child_process.spawn(process.execPath, [path.join(__dirname, "mailee_run.js"), "--config", confName], {
 
 		detached: true,
 		stdio: ["ignore", "ignore", "ignore"],
