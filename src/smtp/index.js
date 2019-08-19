@@ -6,19 +6,19 @@ const mailparser = require("mailparser");
 const nodemailer = require("nodemailer");
 const SMTPServer = require("smtp-server").SMTPServer;
 
-// function mapToObject (strMap) {
+function mapToObject (strMap) {
 
-// 	let obj = Object.create(null);
-// 	for (let [k,v] of strMap) {
+	let obj = Object.create(null);
+	for (let [k,v] of strMap) {
 
-// 		obj[k] = v;
-// 		if (obj[k].text) obj[k] = obj[k].text;
+		obj[k] = v;
+		if (obj[k].text) obj[k] = obj[k].text;
 		
-// 	}
+	}
 	
-// 	return {...obj};
+	return {...obj};
 
-// }
+}
 
 class SMTP {
 
