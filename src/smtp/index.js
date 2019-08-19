@@ -295,9 +295,15 @@ class SMTP {
 
 				});
 
-				// console.log(mapToObject(email.headers));
+				console.log(mapToObject(email.headers));
 
-				mail.push(transport.sendMail(email));
+				mail.push(transport.sendMail({
+					
+					...mapToObject(email.headers),
+					html: email.html,
+					text: email.text
+
+				}));
 
 			}
 
