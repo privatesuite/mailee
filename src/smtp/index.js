@@ -85,8 +85,11 @@ class SMTP {
 			onRcptTo (address, session, callback) {
 
 				console.log(`Email recipient ${address.address}.`)
-				
+
 				if (address.address.endsWith(`@${t.options.host}`)) {
+
+					console.log(`Translates to "${address.address.replace(`@${t.options.host}`, "")}"`);
+					console.log(`Exists: ${t.userExists(address.address.replace(`@${t.options.host}`, ""))}`);
 
 					if (!t.userExists(address.address.replace(`@${t.options.host}`, ""))) {
 
@@ -107,7 +110,7 @@ class SMTP {
 
 			onMailFrom (address, session, callback) {
 
-				console.log(`Mail from ${address}`);
+				console.log(`Mail from ${address.address}`);
 
 				if (!t.isBanned(address.address)) {
 
