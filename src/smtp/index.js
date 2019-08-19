@@ -105,6 +105,9 @@ class SMTP {
 			async onData (stream, session, callback) {
 
 				const email = await mailparser.simpleParser(stream);
+
+				console.log(`New email from ${email.from.text} to ${email.to.text} with subject ${email.subject}`);
+
 				const result = await t.inboundEmail(email, session);
 
 				if (result === true) callback(null);
