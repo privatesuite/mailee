@@ -25,9 +25,9 @@ if (args.ignoreInvalidCertificate) {
 
 // (--- --- START --- ---)
 
-const mailEE = require("../src");
-const config = require("./utils/conf")(args.config);
-const server = mailEE.createSMTP(config);
+const MailEE = require("../src");
+const config = require("../src/utils/conf")(args.config);
+const server = MailEE.createSMTP(config);
 
 (async () => {
 
