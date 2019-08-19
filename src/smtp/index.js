@@ -67,7 +67,7 @@ class SMTP {
 
 			onConnect (session, callback) {
 
-				callback();
+				callback(null);
 
 			},
 
