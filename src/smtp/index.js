@@ -297,7 +297,9 @@ class SMTP {
 					name: this.options.host
 
 				});
-				
+
+				console.log(mapToObject(email.headers));
+
 				mail.push(transport.sendMail(mapToObject(email.headers)));
 
 			}
