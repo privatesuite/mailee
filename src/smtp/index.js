@@ -34,10 +34,13 @@ class SMTP {
 		
 			secure: this.options.secure,
 			name: this.options.host,
+			logger: true,
 
 			ca: this.options.caPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.caPath)) : undefined,
 			key: this.options.keyPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.keyPath)) : undefined,
-			cert: this.options.keyPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.certPath)) : undefined,
+			cert: this.options.certPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.certPath)) : undefined,
+
+			banner: "MailEE SMTP Server",
 
 			onAuth (auth, session, callback) {
 
@@ -140,6 +143,7 @@ class SMTP {
 			
 				this.server.listen(port, this.options.host, () => {
 
+					console.log(`Listening on port ${port}`);
 					if (i === this.options.port.length - 1) resolve();
 
 				});
