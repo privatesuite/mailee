@@ -247,7 +247,7 @@ class SMTP {
 			dns.resolveMx(domain, (err, addresses) => {
 
 				if (err) reject(err);
-				else resolve(addresses);
+				else resolve(addresses.sort((a, b) => a.priority - b.priority));
 
 			});
 
@@ -287,7 +287,7 @@ class SMTP {
 
 				const transport = nodemailer.createTransport({
 
-					host: mx.get(domain),
+					host: mx.get(domain)[0],
 					port: t.options.port,
 					name: t.options.host
 
