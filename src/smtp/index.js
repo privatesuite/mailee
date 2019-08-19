@@ -217,7 +217,7 @@ class SMTP {
 	
 			host: this.options.host,
 			port: this.options.port[0],
-			secure: this.options.secure,
+			// secure: this.options.secure,
 			auth: {
 
 				user: username,
