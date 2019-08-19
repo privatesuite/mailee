@@ -273,7 +273,11 @@ class SMTP {
 
 		db.addEmail(email);
 
-		if (`${email.from.text}@${this.options.host}` === `${session.user}@${this.options.host}`) {
+		console.log(`Sending email from ${email.from.value[0].address}`);
+
+		if (email.from.value[0].address === `${session.user}@${this.options.host}`) {
+
+			console.log("Sending internal email");
 
 			const mx = new Map();
 			const to = email.to.value;

@@ -9,7 +9,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 	await server.listen();
 
-	server.sendEmail("aurame", "testPassword", {
+	await server.sendEmail("aurame", "testPassword", {
 
 		from: "aurame@privatesuitemag.com",
 		to: "coolcorpstudios@gmail.com",
@@ -19,5 +19,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 		html: "<b>Hello</b>"
 
 	});
+
+	console.log("Email sent");
 
 })();
