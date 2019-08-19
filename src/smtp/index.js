@@ -96,7 +96,12 @@ class SMTP {
 						callback(new Error("Non-fatal: Recipient does not exist."));
 						return;
 
-					} else callback(null);
+					} else {
+						
+						callback(null);
+						return;
+
+					}
 
 				}
 
