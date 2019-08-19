@@ -155,7 +155,7 @@ class SMTP {
 				this.server.listen(port, this.options.host, () => {
 
 					console.log(`Listening on port ${port}`);
-					if (i === this.options.port.length - 1) resolve();
+					if (i === this.options.port.length) resolve();
 
 				});
 
