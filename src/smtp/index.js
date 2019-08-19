@@ -285,11 +285,11 @@ class SMTP {
 
 				if (!mx.has(domain)) mx.set(domain, await this.mx(domain));
 
-				console.log(`Sending to ${mx.get(domain)[0]}.`);
+				console.log(`Sending to ${mx.get(domain)[0].exchange}.`);
 
 				const transport = nodemailer.createTransport({
 
-					host: mx.get(domain)[0],
+					host: mx.get(domain)[0].exchange,
 					port: 25,
 					name: t.options.host
 
