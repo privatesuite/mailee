@@ -32,9 +32,10 @@ class SMTP {
 
 		this.server = new SMTPServer({
 		
-			secure: this.options.secure,
+			// secure: this.options.secure,
 			name: this.options.host,
-			logger: true,
+
+			// ciphers: ""
 
 			ca: this.options.caPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.caPath)) : undefined,
 			key: this.options.keyPath ? fs.readFileSync(path.join(__dirname, "..", "..", this.options.keyPath)) : undefined,
