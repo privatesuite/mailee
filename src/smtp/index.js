@@ -12,10 +12,11 @@ function mapToObject (strMap) {
 	for (let [k,v] of strMap) {
 
 		obj[k] = v;
-	
+		if (obj[k].text) obj[k] = obj[k].text;
+		
 	}
 	
-	return obj;
+	return {...obj};
 
 }
 
