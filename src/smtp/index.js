@@ -122,13 +122,17 @@ class SMTP {
 
 		return new Promise(resolve => {
 
+			let i = 0;
+
 			for (const port of this.options.port) {
 			
 				this.server.listen(port, this.options.host, () => {
 
-					resolve();
+					if (i === this.options.port.length - 1) resolve();
 
 				});
+
+				i++;
 
 			}
 
