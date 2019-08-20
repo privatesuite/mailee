@@ -27,7 +27,7 @@ function append (type, data) {
 async function shift () {
 
 	const data = queue.shift();
-	fs.promises.writeFile(handle, `${data.type.toUpperCase()} @ ${data.date.toISOString()} | ${data.data.toString().trim()}\n`);
+	fs.promises.writeFile(handle, `${data.type.toUpperCase()} @ ${new Date(data.date).toISOString()} | ${data.data.toString().trim()}\n`);
 
 }
 
