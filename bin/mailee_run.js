@@ -33,6 +33,6 @@ const server = MailEE.createSMTP(config);
 
 	await server.listen();
 
-	log("Server is listening.");
+	log.info("Server is listening.");
 
 })();
