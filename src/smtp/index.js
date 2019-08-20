@@ -256,6 +256,8 @@ class SMTP {
 
 		if (this.isBanned(email.from.value[0])) return "Non-fatal: Banned sender.";
 
+		if (db.getEmailFromMessageID(email.messageId)) return;
+
 		db.addEmail(email);
 
 		// console.log(`Sending email from ${email.from.value[0].address}`);

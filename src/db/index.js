@@ -47,6 +47,12 @@ module.exports = {
 
 		});
 
+	},
+
+	async getEmailFromMessageID (id) {
+
+		return (await this.getEmails()).find(_ => _.data.messageId === id);
+
 	}
 
 }

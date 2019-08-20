@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const db = require("../src/db");
+const fs = require("fs");
 const args = require("minimist")(process.argv.slice(2));
 const path = require("path");
 const chalk = require("chalk").default;
@@ -81,7 +82,6 @@ function stop () {
 	if (typeof args._[0] === "undefined") {
 	
 	
-	
 	} else if (args._[0] === "status") {
 	
 		if (utils.isRunning()) {
@@ -106,6 +106,10 @@ function stop () {
 
 		await stop();
 		await start();
+
+	} else if (args._[0] === "log" || args._[0] === "logs") {
+
+		const logLines = fs.readF
 
 	} else if (args._[0] === "read") {
 
