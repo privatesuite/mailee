@@ -17,6 +17,7 @@ const child_process = require("child_process");
 
 const confName = args.config || "dev";
 const config = require("../src/utils/conf")(confName);
+const logFile = path.join(__dirname, "..", "logs", ".log");
 
 function start () {
 
@@ -81,7 +82,19 @@ function stop () {
 	
 	if (typeof args._[0] === "undefined") {
 	
-	
+		console.log("┌");
+		console.log(`│ ${chalk.bold("Help")}`);
+		console.log("│");
+		console.log("│ status │ Gets the MailEE daemon's current status.");
+		console.log("│ start  │ Starts the MailEE daemon.");
+		console.log("│ stop   │ Stops the MailEE daemon.");
+		console.log("│ reload │ Reloads the MailEE daemon.");
+		console.log("│ log    │ Reads the last 15 lines of .log file.");
+		console.log("│ read   │ Reads emails. You can specify the email's database ID as the second argument to expand an email.");
+		console.log("│ write  │ Writes emails.");
+
+		console.log(`└`);
+
 	} else if (args._[0] === "status") {
 	
 		if (utils.isRunning()) {
@@ -109,7 +122,36 @@ function stop () {
 
 	} else if (args._[0] === "log" || args._[0] === "logs") {
 
-		const logLines = fs.readF
+		if (!fs.existsSync(logFile)) {
+
+			console.error(chalk.red("Log file does not exist yet."));
+			return;
+
+		}
+
+		let i = 0;
+		const logLines = fs.readFileSync(path.join(__dirname, "..", "logs", ".log")).toString().split(/[\r\n]+/).filter(_ => _).map(_ => {
+
+			i++;
+
+			return {
+
+				number: i,
+				value: _
+
+			}
+
+		});
+
+		console.log("...");
+
+		for (const line of logLines.slice(logLines.length - 15)) {
+			
+			console.log(`${line.number}. ${line.value}`)
+
+		}
+
+		console.log(`─── END ───`)
 
 	} else if (args._[0] === "read") {
 
@@ -140,7 +182,9 @@ function stop () {
 
 		}
 
-		console.log(`┌`);
+		console.log("┌");
+		console.log(`│ ${chalk.bold("Emails")}`);
+		console.log(`│`);
 		for (const email of emails) {
 
 			console.log(`│ ${email.data.date.toISOString()} │ ${email._id} │ ${email.data.subject.slice(0, 20).padEnd(20, " ")} │ ${email.data.from.value[0].address.slice(0, 20).padEnd(20, " ")} → ${email.data.to.value.slice(0, 3).map(_ => _.address).join(", ")}`);

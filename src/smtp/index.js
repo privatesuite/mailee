@@ -248,12 +248,13 @@ class SMTP {
 	/**
 	 * 
 	 * @param {mailparser.ParsedMail} email 
-	 * @param {*} session 
+	 * @param {SMTPServer.SMTPServerSession} session 
 	 */
 	async inboundEmail (email, session) {
 
 		const t = this;
 
+		if (!session.user) return "Non-fatal: Authentication required to send emails.";
 		if (this.isBanned(email.from.value[0])) return "Non-fatal: Banned sender.";
 
 		if (await db.getEmailFromMessageID(email.messageId)) return;
@@ -304,7 +305,7 @@ class SMTP {
 
 			return true;
 
-		} else if (email.from.value[0].endsWith(`@${this.options.host}`)) return;
+		} else return "Non-fatal: Invalid from.";
 
 		return true;
 
