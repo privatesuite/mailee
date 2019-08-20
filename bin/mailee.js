@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const db = require("../src/db");
 const args = require("minimist")(process.argv.slice(2));
 const path = require("path");
 const chalk = require("chalk").default;
@@ -106,9 +107,42 @@ function stop () {
 		await stop();
 		await start();
 
-	} else if (args._[0] === "read" && args._[1]) {
+	} else if (args._[0] === "read") {
 
+		const emails = (await db.getEmails()).sort((a, b) => a.data.date - b.data.date);
 
+		if (args._[1]) {
+
+			const email = emails.find(_ => _._id === args._[1]);
+
+			if (!email) {
+
+				console.error(`Error; Email with identifier "${args._[1]}" not found.`);
+
+			} else {
+
+				console.log(`┌───────────┬─────────────────────`);
+				console.log(`│ FROM      │ ${email.data.from.value[0].address}`);
+				console.log(`│ TO        │ ${email.data.to.value.slice(0, 100).map(_ => _.address).join(", ")}`);
+				console.log(`│ SUBJECT   │ ${email.data.subject}`);
+				console.log(`└───────────┴─────────────────────`);
+				console.log(``);
+
+				console.log(email.data.text.split("\n").map(_ => `   ${_}`).join("\n"));
+
+			}
+
+			return;
+
+		}
+
+		console.log(`┌`);
+		for (const email of emails) {
+
+			console.log(`│ ${email.data.date.toISOString()} │ ${email._id} │ ${email.data.subject.slice(0, 20).padEnd(20, " ")} │ ${email.data.from.value[0].address.slice(0, 20).padEnd(20, " ")} → ${email.data.to.value.slice(0, 3).map(_ => _.address).join(", ")}`);
+
+		}
+		console.log(`└`);
 
 	}
 

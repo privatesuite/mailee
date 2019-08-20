@@ -33,15 +33,6 @@ const server = MailEE.createSMTP(config);
 
 	await server.listen();
 
-	server.sendEmail("aurame", "testPassword", {
-
-		from: "aurame@privatesuitemag.com",
-		to: "coolcorpstudios@gmail.com",
-
-		subject: "Hello World",
-		text: "Hello",
-		html: "<b>Hello</b>"
-
-	});
+	log("Server is listening.");
 
 })();

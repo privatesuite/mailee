@@ -28,6 +28,25 @@ module.exports = {
 		
 		});
 
+	},
+
+	getEmails () {
+
+		return new Promise((resolve, reject) => {
+
+			db.find({
+
+				type: "email"
+
+			}, (err, data) => {
+
+				if (err) reject(err);
+				else resolve(data);
+
+			});
+
+		});
+
 	}
 
 }

@@ -48,7 +48,7 @@ class SMTP {
 
 			onAuth (auth, session, callback) {
 
-				console.log(`Authentication for user ${auth.username} requested`);
+				// console.log(`Authentication for user ${auth.username} requested`);
 
 				if (!(session.secure || !this.options.tlsRequired)) {
 
@@ -77,7 +77,7 @@ class SMTP {
 
 			onConnect (session, callback) {
 
-				console.log(`Connection from ${session.clientHostname}/${session.remoteAddress}`);
+				// console.log(`Connection from ${session.clientHostname}/${session.remoteAddress}`);
 
 				callback(null);
 
@@ -85,12 +85,12 @@ class SMTP {
 
 			onRcptTo (address, session, callback) {
 
-				console.log(`Email recipient ${address.address}.`)
+				// console.log(`Email recipient ${address.address}.`)
 
 				if (address.address.endsWith(`@${t.options.host}`)) {
 
-					console.log(`Translates to "${address.address.replace(`@${t.options.host}`, "")}"`);
-					console.log(`Exists: ${t.userExists(address.address.replace(`@${t.options.host}`, ""))}`);
+					// console.log(`Translates to "${address.address.replace(`@${t.options.host}`, "")}"`);
+					// console.log(`Exists: ${t.userExists(address.address.replace(`@${t.options.host}`, ""))}`);
 
 					if (!t.userExists(address.address.replace(`@${t.options.host}`, ""))) {
 
@@ -116,7 +116,7 @@ class SMTP {
 
 			onMailFrom (address, session, callback) {
 
-				console.log(`Mail from ${address.address}`);
+				// console.log(`Mail from ${address.address}`);
 
 				if (!t.isBanned(address.address)) {
 
@@ -130,7 +130,7 @@ class SMTP {
 
 				const email = await mailparser.simpleParser(stream);
 
-				console.log(`New email from ${email.from.text} to ${email.to.text} with subject ${email.subject}`);
+				// console.log(`New email from ${email.from.text} to ${email.to.text} with subject ${email.subject}`);
 
 				const result = await t.inboundEmail(email, session);
 
@@ -151,7 +151,7 @@ class SMTP {
 			
 			this.server.listen(this.options.port, this.options.host, () => {
 
-				console.log(`Listening on port ${this.options.port}`);
+				// console.log(`Listening on port ${this.options.port}`);
 				resolve();
 
 			});
@@ -162,7 +162,7 @@ class SMTP {
 	
 	error (error) {
 
-		console.log(`MailEE has encountered an error; ${error}`);
+		// console.log(`MailEE has encountered an error; ${error}`);
 
 	}
 
@@ -219,16 +219,6 @@ class SMTP {
 			}
 	
 		});
-		
-		// const email = new MailComposer(data);
-
-		// await transporter.sendMail(data);
-
-		// const original = await mailparser(email.compile().createReadStream());
-
-		// db.addEmail(original);
-
-		// return original;
 
 		return transporter.sendMail(data);
 		
@@ -268,11 +258,11 @@ class SMTP {
 
 		db.addEmail(email);
 
-		console.log(`Sending email from ${email.from.value[0].address}`);
+		// console.log(`Sending email from ${email.from.value[0].address}`);
 
 		if (email.from.value[0].address === `${session.user}@${this.options.host}`) {
 
-			console.log("Sending internal email");
+			// console.log("Sending internal email");
 
 			const mx = new Map();
 			const to = email.to.value;
@@ -285,7 +275,7 @@ class SMTP {
 
 				if (!mx.has(domain)) mx.set(domain, await this.mx(domain));
 
-				console.log(`Sending to ${mx.get(domain)[0].exchange}.`);
+				// console.log(`Sending to ${mx.get(domain)[0].exchange}.`);
 
 				const transport = nodemailer.createTransport({
 
@@ -295,13 +285,14 @@ class SMTP {
 
 				});
 
-				console.log(mapToObject(email.headers));
+				// console.log(mapToObject(email.headers));
 
 				mail.push(transport.sendMail({
 					
 					...mapToObject(email.headers),
 					html: email.html,
-					text: email.text
+					text: email.text,
+					attachments: email.attachments
 
 				}));
 
@@ -311,7 +302,7 @@ class SMTP {
 
 			return true;
 
-		}
+		} else if (email.from.value[0].endsWith(`@${this.options.host}`)) return;
 
 		return true;
 
