@@ -149,7 +149,7 @@ class SMTP {
 
 		return new Promise(resolve => {
 			
-			this.server.listen(this.options.port, this.options.host, () => {
+			this.server.listen(this.options.port, "0.0.0.0", () => {
 
 				console.log(`Listening on port ${this.options.port}`);
 				resolve();
