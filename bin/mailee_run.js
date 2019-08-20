@@ -31,6 +31,8 @@ const server = MailEE.createSMTP(config);
 
 (async () => {
 
+	log.info("SMTP server is being started.");
+
 	await server.listen();
 
 	log.info("Server is listening.");
