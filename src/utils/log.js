@@ -66,12 +66,14 @@ module.exports = {
 
 	info (data) {
 
+		console.info(data);
 		append("info", data);
 
 	},
 
 	error (data) {
 
+		console.error(data);
 		append("error", data);
 
 	}
