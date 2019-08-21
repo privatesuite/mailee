@@ -171,6 +171,7 @@ function stop () {
 				console.log(`│ FROM      │ ${email.data.from.value[0].address}`);
 				console.log(`│ TO        │ ${email.data.to.value.slice(0, 100).map(_ => _.address).join(", ")}`);
 				if (email.data.cc) console.log(`│ CC        │ ${email.data.cc.value.slice(0, 100).map(_ => _.address).join(", ")}`);
+				if (email.data.bcc) console.log(`│ BCC        │ ${email.data.bcc.value.slice(0, 100).map(_ => _.address).join(", ")}`);
 				console.log(`│ SUBJECT   │ ${email.data.subject}`);
 				console.log(`└───────────┴─────────────────────`);
 				console.log(``);
