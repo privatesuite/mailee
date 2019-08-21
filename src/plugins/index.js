@@ -11,6 +11,8 @@ module.exports = {
 
 	load () {
 
+		if (!fs.existsSync(plugin_folder)) return [];
+
 		plugins = fs.readdirSync(plugin_folder).map(_ => new Plugin(path.join(plugin_folder, _)));
 
 		for (const plugin of plugins) {
