@@ -254,7 +254,7 @@ class SMTP {
 
 		const t = this;
 
-		if (!session.user) return "Non-fatal: Authentication required to send emails.";
+		if (!session.user && email.from.value[0].address.endsWith(`@${this.options.host}`)) return "Non-fatal: Authentication required to send emails.";
 		if (this.isBanned(email.from.value[0])) return "Non-fatal: Banned sender.";
 
 		if (await db.getEmailFromMessageID(email.messageId)) return;
@@ -306,8 +306,6 @@ class SMTP {
 			return true;
 
 		} else return "Non-fatal: Invalid from.";
-
-		return true;
 
 	}
 

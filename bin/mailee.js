@@ -170,6 +170,7 @@ function stop () {
 				console.log(`┌───────────┬─────────────────────`);
 				console.log(`│ FROM      │ ${email.data.from.value[0].address}`);
 				console.log(`│ TO        │ ${email.data.to.value.slice(0, 100).map(_ => _.address).join(", ")}`);
+				console.log(`│ CC        │ ${email.data.cc.value.slice(0, 100).map(_ => _.address).join(", ")}`);
 				console.log(`│ SUBJECT   │ ${email.data.subject}`);
 				console.log(`└───────────┴─────────────────────`);
 				console.log(``);

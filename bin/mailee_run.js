@@ -1,6 +1,7 @@
 const log = require("../src/utils/log");
 const args = require("minimist")(process.argv.slice(2));
 const utils = require("./utils");
+const plugins = require("../src/plugins");
 
 utils.run();
 log.info("Starting MailEE server...");
@@ -36,5 +37,7 @@ const server = MailEE.createSMTP(config);
 	await server.listen();
 
 	log.info("Server is listening.");
+
+	plugins.load();
 
 })();
