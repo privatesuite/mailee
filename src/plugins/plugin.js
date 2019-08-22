@@ -6,9 +6,10 @@ const db = require("../db");
 
 class Plugin {
 
-	constructor (folder) {
+	constructor (smtp, folder) {
 
 		this.vm;
+		this.smtp = smtp;
 		this.folder = folder;
 
 		this.cache = {};
@@ -62,7 +63,7 @@ class Plugin {
 
 					mailee_plugin: {
 
-						smtp: require("../smtp"),
+						smtp: this.smtp,
 						database: db,
 						
 						utils: {

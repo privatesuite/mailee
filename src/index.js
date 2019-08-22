@@ -1,4 +1,5 @@
 const SMTP = require("./smtp");
+const plugins = require("./plugins");
 
 module.exports = {
 
@@ -13,6 +14,8 @@ module.exports = {
 
 		});
 
-	}
+	},
+
+	plugins
 
 }

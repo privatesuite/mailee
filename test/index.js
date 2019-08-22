@@ -9,12 +9,14 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 	await server.listen();
 
+	MailEE.plugins.load(server);
+
 	console.log("Sending email");
 
 	await server.sendEmail("aurame", "testPassword", {
 
-		from: "Auguste Rame <aurame@privatesuitemag.com>",
-		to: "coolcorpstudios@gmail.com",
+		from: "Auguste Rame <aurame@localhost>",
+		to: "aurame@localhost",
 
 		subject: "Hello World",
 		text: "Hello",

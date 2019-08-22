@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const Datastore = require("nedb");
 const mailparser = require("mailparser");
+const EventEmitter = require("events").EventEmitter;
 
 var db = new Datastore({
 	
@@ -31,7 +32,11 @@ function find (query) {
 
 }
 
+const events = new EventEmitter();
+
 module.exports = {
+
+	events () {return events;},
 
 	/**
 	 * 
@@ -63,10 +68,23 @@ module.exports = {
 
 				mailFile
 	
-			}, err => {
+			}, (err, document) => {
 	
 				if (err) reject(err);
-				else resolve();
+				else {
+				
+					events.emit("email", {
+
+						_id: document._id,
+
+						...email,
+						mailFile
+
+					});
+
+					resolve();
+
+				}
 	
 			});
 		

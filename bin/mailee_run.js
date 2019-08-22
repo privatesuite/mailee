@@ -1,7 +1,6 @@
 const log = require("../src/utils/log");
 const args = require("minimist")(process.argv.slice(2));
 const utils = require("./utils");
-const plugins = require("../src/plugins");
 
 utils.run();
 log.info("Starting MailEE server...");
@@ -29,6 +28,7 @@ if (args.ignoreInvalidCertificate) {
 const MailEE = require("../src");
 const config = require("../src/utils/conf")(args.config);
 const server = MailEE.createSMTP(config);
+const plugins = MailEE.plugins;
 
 (async () => {
 
@@ -38,6 +38,6 @@ const server = MailEE.createSMTP(config);
 
 	log.info("Server is listening.");
 
-	plugins.load();
+	plugins.load(server);
 
 })();
