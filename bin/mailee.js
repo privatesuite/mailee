@@ -155,7 +155,7 @@ function stop () {
 
 	} else if (args._[0] === "read") {
 
-		const emails = (await db.getEmails()).sort((a, b) => a.data.date - b.data.date);
+		const emails = (await db.getEmails()).sort((a, b) => a.metadata.date - b.metadata.date);
 
 		if (args._[1]) {
 
