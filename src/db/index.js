@@ -56,7 +56,8 @@ module.exports = {
 					subject: email.subject,
 					date: email.date,
 
-					preview: email.text.slice(0, 32)
+					preview: email.text.slice(0, 32),
+					messsageId: email.messageId
 
 				},
 
@@ -107,7 +108,7 @@ module.exports = {
 
 	async getEmailFromMessageID (id) {
 
-		return (await this.getEmails()).find(_ => _.data.messageId === id);
+		return (await this.getEmails()).find(_ => _.metadata.messageId === id);
 
 	}
 
