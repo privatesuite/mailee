@@ -38,6 +38,6 @@ const plugins = MailEE.plugins;
 
 	log.info("Server is listening.");
 
-	plugins.load(server);
+	log.info(`Loaded ${plugins.load(server).length} plugins!`);
 
 })();
