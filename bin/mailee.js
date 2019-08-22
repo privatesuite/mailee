@@ -159,7 +159,7 @@ function stop () {
 
 		if (args._[1]) {
 
-			const email = emails.find(_ => _._id === args._[1]);
+			const email = await db.getEmail(args._[1]);
 
 			if (!email) {
 
@@ -168,11 +168,11 @@ function stop () {
 			} else {
 
 				console.log(`┌───────────┬─────────────────────`);
-				console.log(`│ FROM      │ ${email.data.from.value[0].address}`);
-				console.log(`│ TO        │ ${email.data.to.value.slice(0, 100).map(_ => _.address).join(", ")}`);
-				if (email.data.cc) console.log(`│ CC        │ ${email.data.cc.value.slice(0, 100).map(_ => _.address).join(", ")}`);
-				if (email.data.bcc) console.log(`│ BCC        │ ${email.data.bcc.value.slice(0, 100).map(_ => _.address).join(", ")}`);
-				console.log(`│ SUBJECT   │ ${email.data.subject}`);
+				console.log(`│ FROM      │ ${email.metadata.from.value.map(_ => _.address).join(", ")}`);
+				console.log(`│ TO        │ ${email.metadata.to.value.slice(0, 100).map(_ => _.address).join(", ")}`);
+				if (email.metadata.cc) console.log(`│ CC        │ ${email.data.cc.value.slice(0, 100).map(_ => _.address).join(", ")}`);
+				if (email.metadata.bcc) console.log(`│ BCC        │ ${email.data.bcc.value.slice(0, 100).map(_ => _.address).join(", ")}`);
+				console.log(`│ SUBJECT   │ ${email.metadata.subject}`);
 				console.log(`└───────────┴─────────────────────`);
 				console.log(``);
 
@@ -189,7 +189,7 @@ function stop () {
 		console.log(`│`);
 		for (const email of emails) {
 
-			console.log(`│ ${email.data.date.toISOString()} │ ${email._id} │ ${email.data.subject.slice(0, 20).padEnd(20, " ")} │ ${email.data.from.value[0].address.slice(0, 20).padEnd(20, " ")} → ${email.data.to.value.slice(0, 3).map(_ => _.address).join(", ")}`);
+			console.log(`│ ${email.metadata.date.toISOString()} │ ${email._id} │ ${email.metadata.subject.slice(0, 20).padEnd(20, " ")} │ ${email.metadata.from.value[0].address.slice(0, 20).padEnd(20, " ")} → ${email.metadata.to.value.slice(0, 3).map(_ => _.address).join(", ")}`);
 
 		}
 		console.log(`└`);

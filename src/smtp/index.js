@@ -126,16 +126,28 @@ class SMTP {
 
 			},
 
-			async onData (stream, session, callback) {
+			onData (stream, session, callback) {
 
-				const email = await mailparser.simpleParser(stream);
+				if (!fs.existsSync(path.join(__dirname, "..", "..", "mail"))) fs.mkdirSync(path.join(__dirname, "..", "..", "mail"));
 
-				// console.log(`New email from ${email.from.text} to ${email.to.text} with subject ${email.subject}`);
+				const mailFile = path.join(__dirname, "..", "..", "mail", `${Math.random().toString(36).replace("0.", "")}.mail`);
+				stream.pipe(fs.createWriteStream(mailFile)).on("close", async () => {
 
-				const result = await t.inboundEmail(email, session);
+					const email = await mailparser.simpleParser(fs.createReadStream(mailFile));
 
-				if (result === true) callback(null);
-				else callback(new Error(result || "Non-fatal: Email rejected."));
+					// console.log(`New email from ${email.from.text} to ${email.to.text} with subject ${email.subject}`);
+
+					const result = await t.inboundEmail(mailFile, email, session);
+
+					if (result === true) callback(null);
+					else {
+					
+						fs.unlinkSync(mailFile);
+						callback(new Error(result || "Non-fatal: Email rejected."));
+
+					}
+
+				});
 
 			}
 
@@ -247,10 +259,11 @@ class SMTP {
 
 	/**
 	 * 
+	 * @param {string} mailFile
 	 * @param {mailparser.ParsedMail} email 
 	 * @param {SMTPServer.SMTPServerSession} session 
 	 */
-	async inboundEmail (email, session) {
+	async inboundEmail (mailFile, email, session) {
 
 		const t = this;
 
@@ -259,7 +272,7 @@ class SMTP {
 
 		if (await db.getEmailFromMessageID(email.messageId)) return;
 
-		db.addEmail(email);
+		db.addEmail(mailFile, email);
 
 		// console.log(`Sending email from ${email.from.value[0].address}`);
 
@@ -305,7 +318,7 @@ class SMTP {
 
 			return true;
 
-		} else return "Non-fatal: Invalid from.";
+		} else return true;
 
 	}
 
