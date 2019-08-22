@@ -31,11 +31,11 @@ async function shift () {
 
 }
 
-// process.stdout.on("data", data => {
+process.stdout.on("data", data => {
 
-// 	append("info", data);
+	append("info", data);
 
-// });
+});
 
 process.stdout.on("error", data => {
 
