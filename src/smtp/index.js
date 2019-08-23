@@ -249,15 +249,17 @@ class SMTP {
 			
 			console.log(`Sending to "${mx.get(domain)[0].exchange}" via "${this.options.host}".`);
 			
+			const sec = await isPortReachable(465);
+
 			const transport = nodemailer.createTransport({
 				
 				host: mx.get(domain)[0].exchange,
-				port: (await isPortReachable(465)) ? 465 : 25,
+				port: sec ? 465 : 25,
 
 				// na
 
 				name: this.options.host,
-				secure: this.options.secure
+				secure: this.options.secure && sec
 				
 			});
 			
