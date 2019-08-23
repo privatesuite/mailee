@@ -227,6 +227,8 @@ class SMTP {
 	
 	async _sendEmail (email) {
 		
+		console.log("_sendEmail triggered");
+
 		const mx = new Map();
 		const to = email.to.value;
 		const mail = [];
@@ -239,6 +241,7 @@ class SMTP {
 			if (!mx.has(domain)) {
 				
 				let mxd = await this.mx(domain);
+				console.log(mxd);
 				if (!mxd) return false;
 				mx.set(domain, mxd);
 
