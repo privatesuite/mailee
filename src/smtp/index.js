@@ -354,7 +354,7 @@ class SMTP {
 
 		// console.log(`Sending email from ${email.from.value[0].address}`);
 		
-		if (email.from.value[0].address === `${session.user}@${this.options.host}`) {
+		if (email.from.value[0].address === `${session.user}@${this.options.host}` || session.user === "mailee_root") {
 			
 			console.log("Sending outbound email");
 			
