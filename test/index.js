@@ -15,7 +15,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 	await server.sendEmail("aurame", "testPassword", {
 
-		from: "Auguste Rame <aurame@localhost>",
+		from: "aurame@localhost",
 		to: "aurame@localhost",
 
 		subject: "Hello World",
