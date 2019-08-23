@@ -226,8 +226,6 @@ class SMTP {
 	}
 	
 	async _sendEmail (email) {
-		
-		console.log("_sendEmail triggered");
 
 		const mx = new Map();
 		const to = email.to.value;
@@ -241,7 +239,6 @@ class SMTP {
 			if (!mx.has(domain)) {
 				
 				let mxd = await this.mx(domain);
-				console.log(mxd);
 				if (!mxd) return false;
 				mx.set(domain, mxd);
 
@@ -249,7 +246,7 @@ class SMTP {
 				
 			} else continue;
 			
-			console.log(`Sending to "${mx.get(domain)[0].exchange}" via "${this.options.host}".`);
+			// console.log(`Sending to "${mx.get(domain)[0].exchange}" via "${this.options.host}".`);
 			
 			const transport = nodemailer.createTransport({
 				
@@ -356,7 +353,7 @@ class SMTP {
 		
 		if (email.from.value[0].address === `${session.user}@${this.options.host}`) {
 			
-			// console.log("Sending internal email");
+			console.log("Sending outbound email");
 			
 			const outbound = this._sendEmail(email);
 			
@@ -369,6 +366,8 @@ class SMTP {
 
 		} else {
 		
+			console.log("Receiving inbound email");
+
 			db.addEmail(mailFile, email);
 			
 			return true;
