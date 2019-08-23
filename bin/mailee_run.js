@@ -32,7 +32,7 @@ const plugins = MailEE.plugins;
 
 (async () => {
 
-	log.info("SMTP server is being started.");
+	log.info(`SMTP server is being started using config "${args.config}".`);
 
 	await server.listen();
 
