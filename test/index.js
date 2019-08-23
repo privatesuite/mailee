@@ -13,7 +13,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 	console.log("Sending email");
 
-	await server.sendEmail("aurame", "testPassword", {
+	await server.sendEmail("mailee_root", server.sessionRootPassword, {
 
 		from: "aurame@privatesuitemag.com",
 		to: "coolcorpstudios@gmail.com",
