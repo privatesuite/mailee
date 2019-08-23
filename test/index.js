@@ -15,7 +15,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 	await server.sendEmail("mailee_root", server.sessionRootPassword, {
 
-		from: `aurame@${config.smtp.host}`,
+		from: "aurame@privatesuitemag.com",
 		to: "coolcorpstudios@gmail.com",
 
 		subject: "Hello World",
