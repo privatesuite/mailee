@@ -251,7 +251,7 @@ class SMTP {
 			const transport = nodemailer.createTransport({
 				
 				host: mx.get(domain)[0].exchange,
-				port: 25,
+				port: true ? 465 : 25,
 
 				// na
 

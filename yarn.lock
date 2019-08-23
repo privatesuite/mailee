@@ -134,6 +134,10 @@ ipv6-normalize@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ipv6-normalize/-/ipv6-normalize-1.0.1.tgz#1b3258290d365fa83239e89907dde4592e7620a8"
 
+is-port-reachable@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/is-port-reachable/-/is-port-reachable-2.0.1.tgz#e0778d0733beac1ade3ba72a5fe77db50a59926b"
+
 libbase64@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/libbase64/-/libbase64-1.0.3.tgz#de3023234abeefeb9d49378804c8a94404f5c98c"
