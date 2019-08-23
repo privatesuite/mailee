@@ -246,7 +246,7 @@ class SMTP {
 				
 			} else continue;
 			
-			// console.log(`Sending to ${mx.get(domain)[0].exchange}.`);
+			console.log(`Sending to "${mx.get(domain)[0].exchange}" via "${this.options.host}".`);
 			
 			const transport = nodemailer.createTransport({
 				
