@@ -252,7 +252,11 @@ class SMTP {
 				
 				host: mx.get(domain)[0].exchange,
 				port: 25,
-				name: this.options.host
+
+				// na
+
+				name: this.options.host,
+				secure: this.options.secure
 				
 			});
 			
