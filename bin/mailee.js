@@ -29,9 +29,9 @@ function start () {
 
 	}
 
-	console.info(chalk.cyan("Starting MailEE..."));
+	console.info(chalk.cyan(`Starting MailEE with config "${confName}"...`));
 
-	child_process.spawn(process.execPath, [path.join(__dirname, "mailee_run.js"), "--config", confName], {
+	child_process.spawn(process.execPath, [path.join(__dirname, "mailee_run.js"), `--config ${confName}`], {
 
 		detached: true,
 		stdio: ["ignore", "ignore", "ignore"],
