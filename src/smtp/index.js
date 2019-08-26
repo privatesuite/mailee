@@ -243,7 +243,7 @@ class SMTP {
 				if (!mxd) return false;
 				mx.set(domain, mxd);
 
-				if (domain === "localhost" || domain === "127.0.0.1") continue;
+				if (/*domain === "localhost" || domain === "127.0.0.1" || */domain === this.options.host) continue;
 				
 			} else continue;
 			

@@ -9,7 +9,20 @@
 	{
 	
 		"username": "aurame",
-		"name": "Auguste Rame",
+		"aliases": ["root"],
+		
+		"password": {
+
+			"type": "plaintext",
+			"value": "testPassword"
+
+		}
+		
+	},
+
+	{
+	
+		"username": "aurame2",
 		"aliases": ["root"],
 		
 		"password": {
