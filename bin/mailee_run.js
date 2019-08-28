@@ -13,7 +13,7 @@ process.on("uncaughtException", err => {
 
 process.on("unhandledRejection", err => {
 
-	log.error(err);
+	log.error(err.stack);
 
 });
 

@@ -58,7 +58,7 @@ class Plugin {
 				external: true,
 				builtin: ["*"],
 				root: this.folder,
-				context: "sandbox",
+				context: "host",
 				mock: {
 
 					mailee_plugin: {
