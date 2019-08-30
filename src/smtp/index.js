@@ -2,6 +2,7 @@ const db = require("../db");
 const fs = require("fs");
 const dns = require("dns");
 const path = require("path");
+const sha512 = require("js-sha512");
 const mailparser = require("mailparser");
 const nodemailer = require("nodemailer");
 const SMTPServer = require("smtp-server").SMTPServer;
@@ -37,6 +38,9 @@ class SMTP {
 		this.users.push({
 
 			username: "mailee_root",
+
+			admin: true,
+			virtual: true,
 
 			password: {
 
@@ -201,6 +205,10 @@ class SMTP {
 			if (user.username === username && user.password) {
 				
 				if (user.password.type === "plaintext" && user.password.value === password) {
+					
+					return user;
+					
+				} else if (user.password.type === "sha512" && user.password.value.toLowerCase() === sha512.sha512(password)) {
 					
 					return user;
 					
