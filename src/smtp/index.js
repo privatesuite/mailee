@@ -242,7 +242,7 @@ class SMTP {
 		const mail = [];
 
 		email.bcc = email.headers.get("x-bcc");
-		if (email.bcc) to.push(email.bcc.split(",").map(_ => {return {address: _.trim()}}));
+		if (email.bcc) to.push(...email.bcc.split(",").map(_ => {return {address: _.trim()}}));
 
 		for (const recp of to) {
 			
