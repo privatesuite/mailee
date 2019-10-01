@@ -320,7 +320,9 @@ class SMTP {
 		});
 		
 		if (!data.headers) data.headers = {};
-		if (data.bcc) data.headers["x-bcc"] = data.bcc.text;
+		if (data.bcc) data.headers["x-bcc"] = data.bcc;
+		if (data.bcc) log.info(data.headers["x-bcc"]);
+		
 		return transporter.sendMail(data);
 		
 	}
