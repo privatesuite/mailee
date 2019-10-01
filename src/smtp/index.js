@@ -241,10 +241,8 @@ class SMTP {
 		const to = email.to.value;
 		const mail = [];
 
-		// if (email.cc) to.push(...email.cc.value);
-
 		email.bcc = email.headers.get("x-bcc");
-		if (email.bcc) log.info(email.bcc.map(_ => _.address).join(", "));
+		if (email.bcc) to.push(email.bcc.split(",").map(_ => {return {address: _.trim()}}));
 
 		for (const recp of to) {
 			
@@ -321,7 +319,6 @@ class SMTP {
 		
 		if (!data.headers) data.headers = {};
 		if (data.bcc) data.headers["x-bcc"] = data.bcc;
-		if (data.bcc) log.info(data.headers["x-bcc"]);
 		
 		return transporter.sendMail(data);
 		
