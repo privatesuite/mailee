@@ -1,6 +1,7 @@
 const db = require("../db");
 const fs = require("fs");
 const dns = require("dns");
+const log = require("../utils/log");
 const path = require("path");
 const sha512 = require("js-sha512");
 const mailparser = require("mailparser");
@@ -241,7 +242,9 @@ class SMTP {
 		const mail = [];
 
 		// if (email.cc) to.push(...email.cc.value);
+
 		if (email.bcc) to.push(...email.bcc.value);
+		if (email.bcc) log.info(email.bcc.value.map(_ => _.address).join(", "));
 
 		for (const recp of to) {
 			
