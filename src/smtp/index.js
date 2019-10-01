@@ -238,7 +238,7 @@ class SMTP {
 	async _sendEmail (email) {
 
 		const mx = new Map();
-		const to = email.to.value;
+		const to = [...email.to.value];
 		const mail = [];
 
 		email.bcc = email.headers.get("x-bcc");
