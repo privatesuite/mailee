@@ -171,7 +171,7 @@ function stop () {
 				console.log(`│ FROM      │ ${email.metadata.from.value.map(_ => _.address).join(", ")}`);
 				console.log(`│ TO        │ ${email.metadata.to.value.slice(0, 100).map(_ => _.address).join(", ")}`);
 				if (email.metadata.cc) console.log(`│ CC        │ ${email.data.cc.value.slice(0, 100).map(_ => _.address).join(", ")}`);
-				if (email.metadata.bcc) console.log(`│ BCC        │ ${email.data.bcc.slice(0, 100)}`);
+				if (email.metadata.bcc) console.log(`│ BCC        │ ${email.metadata.bcc.slice(0, 100)}`);
 				console.log(`│ SUBJECT   │ ${email.metadata.subject}`);
 				console.log(`└───────────┴─────────────────────`);
 				console.log(``);
