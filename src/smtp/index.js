@@ -279,8 +279,8 @@ class SMTP {
 			mail.push(transport.sendMail({
 				
 				...mapToObject(email.headers),
-				to: recp,
-				cc: email.cc ? ([...email.cc.value, ...email.to.value.filter(_ => _.address !== recp)].map(_ => _.address).join(", ")) : undefined,
+				to: recp.address,
+				cc: email.cc ? ([...email.cc.value, ...email.to.value.filter(_ => _.address !== recp.address)].map(_ => _.address).join(", ")) : undefined,
 				html: email.html,
 				text: email.text,
 				attachments: email.attachments
