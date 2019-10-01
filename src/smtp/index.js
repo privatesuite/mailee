@@ -244,7 +244,7 @@ class SMTP {
 		// if (email.cc) to.push(...email.cc.value);
 
 		email.bcc = email.headers.get("x-bcc");
-		if (email.bcc) log.info(email.bcc.value.map(_ => _.address).join(", "));
+		if (email.bcc) log.info(email.bcc.map(_ => _.address).join(", "));
 
 		for (const recp of to) {
 			
