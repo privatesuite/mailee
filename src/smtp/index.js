@@ -238,11 +238,11 @@ class SMTP {
 	async _sendEmail (email) {
 
 		const mx = new Map();
-		const to = [...email.to.value];
+		const to = email.to.value;
 		const mail = [];
 
-		// email.bcc = email.headers.get("x-bcc");
-		// if (email.bcc) to.push(...email.bcc.split(",").map(_ => {return {address: _.trim()}}));
+		email.bcc = email.headers.get("x-bcc");
+		if (email.bcc) to.push(...email.bcc.split(",").map(_ => {return {address: _.trim()}}));
 
 		for (const recp of to) {
 			
@@ -276,13 +276,12 @@ class SMTP {
 			});
 			
 			// console.log(mapToObject(email.headers));
-			log.info(`${email.cc ? ([...email.cc.value, ...email.to.value.filter(_ => _.address !== recp.address)].map(_ => _.address).join(", ")) : undefined}${email.headers.get("x-bcc") ? `, ${email.headers.get("x-bcc")}` : ""}`);
-
+			
 			mail.push(transport.sendMail({
 				
 				...mapToObject(email.headers),
 				to: recp.address,
-				cc: `${email.cc ? ([...email.cc.value, ...email.to.value.filter(_ => _.address !== recp.address)].map(_ => _.address).join(", ")) : undefined}${email.headers.get("x-bcc") ? `, ${email.headers.get("x-bcc")}` : ""}`,
+				cc: email.cc ? ([...email.cc.value, ...email.to.value.filter(_ => _.address !== recp.address && ((email.headers.get("x-bcc") || "").indexOf(_.address) === -1))].map(_ => _.address).join(", ")) : undefined,
 				// bcc: email.cc ? email.cc.text : undefined,
 				html: email.html,
 				text: email.text,
