@@ -243,7 +243,7 @@ class SMTP {
 
 		// if (email.cc) to.push(...email.cc.value);
 
-		if (email.bcc) to.push(...email.bcc.value);
+		email.bcc = email.headers.get("x-bcc");
 		if (email.bcc) log.info(email.bcc.value.map(_ => _.address).join(", "));
 
 		for (const recp of to) {
@@ -319,6 +319,7 @@ class SMTP {
 			
 		});
 		
+		if (data.bcc) data.headers["x-bcc"] = data.bcc.text;
 		return transporter.sendMail(data);
 		
 	}
