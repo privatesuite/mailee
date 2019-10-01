@@ -238,11 +238,11 @@ class SMTP {
 	async _sendEmail (email) {
 
 		const mx = new Map();
-		const to = email.to.value;
+		const to = [...email.to.value];
 		const mail = [];
 
-		email.bcc = email.headers.get("x-bcc");
-		if (email.bcc) to.push(...email.bcc.split(",").map(_ => {return {address: _.trim()}}));
+		// email.bcc = email.headers.get("x-bcc");
+		// if (email.bcc) to.push(...email.bcc.split(",").map(_ => {return {address: _.trim()}}));
 
 		for (const recp of to) {
 			
@@ -281,7 +281,7 @@ class SMTP {
 				
 				...mapToObject(email.headers),
 				to: recp.address,
-				cc: email.cc ? ([...email.cc.value, ...email.to.value.filter(_ => _.address !== recp.address && ((email.headers.get("x-bcc") || "").indexOf(_.address) === -1))].map(_ => _.address).join(", ")) : undefined,
+				cc: email.cc ? ([...email.cc.value, ...to.filter(_ => _.address !== recp.address)].map(_ => _.address).join(", ")) : undefined,
 				// bcc: email.cc ? email.cc.text : undefined,
 				html: email.html,
 				text: email.text,
@@ -317,8 +317,8 @@ class SMTP {
 			
 		});
 		
-		if (!data.headers) data.headers = {};
-		if (data.bcc) data.headers["x-bcc"] = data.bcc;
+		// if (!data.headers) data.headers = {};
+		// if (data.bcc) data.headers["x-bcc"] = data.bcc;
 		
 		return transporter.sendMail(data);
 		
