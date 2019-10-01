@@ -319,6 +319,7 @@ class SMTP {
 			
 		});
 		
+		if (!data.headers) data.headers = {};
 		if (data.bcc) data.headers["x-bcc"] = data.bcc.text;
 		return transporter.sendMail(data);
 		
