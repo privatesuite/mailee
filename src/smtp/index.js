@@ -240,8 +240,8 @@ class SMTP {
 		const to = email.to.value;
 		const mail = [];
 
-		if (email.cc.value) to.push(...email.cc.value);
-		if (email.bcc.value) to.push(...email.bcc.value);
+		if (email.cc) to.push(...email.cc.value);
+		if (email.bcc) to.push(...email.bcc.value);
 
 		for (const recp of to) {
 			
