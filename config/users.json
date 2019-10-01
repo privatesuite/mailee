@@ -1,48 +1,41 @@
 [
-
-	{
-
-		"username": "root",
-		
-		"admin": true,
-
-		"password": {
-
-			"type": "sha512",
-			"value": "8A5B8B4611DEE46B3DAF3531FABB2A73A93A2BE376EAA240DC115DD5818BD24A533EEEE9A46AAA27C8064516E489E60B75533506E774E1979228428C910AF275"
-
-		}
-
-	},
-
-	{
-	
-		"username": "aurame",
-		"aliases": ["root"],
-
-		"name": "Auguste at Private Suite Magazine",
-		
-		"password": {
-
-			"type": "sha512",
-			"value": "8A5B8B4611DEE46B3DAF3531FABB2A73A93A2BE376EAA240DC115DD5818BD24A533EEEE9A46AAA27C8064516E489E60B75533506E774E1979228428C910AF275"
-
-		}
-		
-	},
-
-	{
-	
-		"username": "aurame2",
-		"aliases": ["root"],
-		
-		"password": {
-
-			"type": "plaintext",
-			"value": "testPassword"
-
-		}
-		
-	}
-
+  {
+    "username": "root",
+    "admin": true,
+    "password": {
+      "type": "sha512",
+      "value": "8A5B8B4611DEE46B3DAF3531FABB2A73A93A2BE376EAA240DC115DD5818BD24A533EEEE9A46AAA27C8064516E489E60B75533506E774E1979228428C910AF275"
+    }
+  },
+  {
+    "username": "aurame2",
+    "aliases": [
+      "root"
+    ],
+    "password": {
+      "type": "plaintext",
+      "value": "testPassword"
+    }
+  },
+  {
+    "username": "aurame",
+    "aliases": [
+      "root"
+    ],
+    "name": "Auguste at Private Suite",
+    "password": {
+      "type": "sha512",
+      "value": "8a5b8b4611dee46b3daf3531fabb2a73a93a2be376eaa240dc115dd5818bd24a533eeee9a46aaa27c8064516e489e60b75533506e774e1979228428c910af275"
+    },
+    "admin": true
+  },
+  {
+    "username": "aurame22",
+    "name": "aurame22 test",
+    "password": {
+      "type": "sha512",
+      "value": "beff8f886720aa1c56b1eddd9d2ac525e5f8add8746a708854baac984015aa6cad90c3a0625b3d731a02d7194a27937aa0f283997b1cafbf80ea73dc6ab15f94"
+    },
+    "admin": false
+  }
 ]

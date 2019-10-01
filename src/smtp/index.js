@@ -239,7 +239,10 @@ class SMTP {
 		const mx = new Map();
 		const to = email.to.value;
 		const mail = [];
-		
+
+		if (email.cc.value) to.push(...email.cc.value);
+		if (email.bcc.value) to.push(...email.bcc.value);
+
 		for (const recp of to) {
 			
 			const user = recp.address.split("@")[0];
