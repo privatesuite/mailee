@@ -240,8 +240,8 @@ class SMTP {
 		const to = email.to.value;
 		const mail = [];
 
-		if (email.cc) to.push(...email.cc.value);
-		if (email.bcc) to.push(...email.bcc.value);
+		// if (email.cc) to.push(...email.cc.value);
+		// if (email.bcc) to.push(...email.bcc.value);
 
 		for (const recp of to) {
 			
@@ -279,6 +279,8 @@ class SMTP {
 			mail.push(transport.sendMail({
 				
 				...mapToObject(email.headers),
+				to: recp,
+				cc: [...email.cc.value, ...email.to.value.filter(_ => _.address !== recp)].join(", "),
 				html: email.html,
 				text: email.text,
 				attachments: email.attachments
