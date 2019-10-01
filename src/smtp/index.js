@@ -280,7 +280,7 @@ class SMTP {
 				
 				...mapToObject(email.headers),
 				to: recp,
-				cc: [...email.cc.value, ...email.to.value.filter(_ => _.address !== recp)].join(", "),
+				cc: email.cc ? [...email.cc.value, ...email.to.value.filter(_ => _.address !== recp)].join(", ") : undefined,
 				html: email.html,
 				text: email.text,
 				attachments: email.attachments
