@@ -291,7 +291,7 @@ class SMTP {
 			
 		}
 		
-		return Promise.all(mail);
+		return Promise.all(mail.map(_ => _.catch(__ => __)));
 		
 	}
 	
