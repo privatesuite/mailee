@@ -241,7 +241,7 @@ class SMTP {
 		const to = [...email.to.value];
 		const mail = [];
 
-		console.log(to);
+		// console.log(to);
 		// email.bcc = email.headers.get("x-bcc");
 		// if (email.bcc) to.push(...email.bcc.split(",").map(_ => {return {address: _.trim()}}));
 
@@ -258,9 +258,9 @@ class SMTP {
 
 				if (/*domain === "localhost" || domain === "127.0.0.1" || */domain === this.options.host) continue;
 				
-			} else continue;
+			}
 			
-			console.log(`Sending to "${mx.get(domain)[0].exchange}" via "${this.options.host}".`);
+			console.log(`Sending to ${user}@${domain} via "${mx.get(domain)[0].exchange}" from "${this.options.host}".`);
 			
 			const sec = await isPortReachable(465);
 
