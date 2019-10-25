@@ -277,6 +277,7 @@ class SMTP {
 			
 			// console.log(mapToObject(email.headers));
 			
+			try {
 			mail.push(transport.sendMail({
 				
 				...mapToObject(email.headers),
@@ -288,6 +289,7 @@ class SMTP {
 				attachments: email.attachments
 				
 			}));
+			} catch (e) {} 
 			
 		}
 		
