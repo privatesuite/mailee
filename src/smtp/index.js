@@ -241,6 +241,7 @@ class SMTP {
 		const to = [...email.to.value];
 		const mail = [];
 
+		console.log(to);
 		// email.bcc = email.headers.get("x-bcc");
 		// if (email.bcc) to.push(...email.bcc.split(",").map(_ => {return {address: _.trim()}}));
 
