@@ -176,7 +176,7 @@ function stop () {
 				console.log(`└───────────┴─────────────────────`);
 				console.log(``);
 
-				console.log(email.data.text.split("\n").map(_ => `   ${_}`).join("\n"));
+				console.log((email.data.text || email.data.html || "No content").split("\n").map(_ => `   ${_}`).join("\n"));
 
 			}
 
@@ -189,7 +189,7 @@ function stop () {
 		console.log(`│`);
 		for (const email of emails) {
 
-			console.log(`│ ${email.metadata.date.toISOString()} │ ${email._id} │ ${email.metadata.subject.slice(0, 20).padEnd(20, " ")} │ ${email.metadata.from.value[0].address.slice(0, 20).padEnd(20, " ")} → ${email.metadata.to.value.slice(0, 3).map(_ => _.address).join(", ")}`);
+			console.log(`│ ${email.metadata.date.toISOString()} │ ${email._id} │ ${(email.metadata.subject || "No Subject").slice(0, 20).padEnd(20, " ")} │ ${email.metadata.from.value[0].address.slice(0, 20).padEnd(20, " ")} → ${email.metadata.to.value.slice(0, 3).map(_ => _.address).join(", ")}`);
 
 		}
 		console.log(`└`);

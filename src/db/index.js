@@ -61,7 +61,7 @@ module.exports = {
 					subject: email.subject,
 					date: email.date,
 
-					preview: email.text.slice(0, 32),
+					preview: email.text ? email.text.slice(0, 32) : "No text",
 					messsageId: email.messageId
 
 				},
