@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+acorn-walk@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-8.2.0.tgz#741210f2e2426454508853a2f44d0ab83b7f69c1"
+
+acorn@^8.7.0:
+  version "8.7.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.0.tgz#90951fde0f8f09df93549481e5fc141445b791cf"
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
@@ -306,5 +314,8 @@ util-deprecate@^1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
 
 vm2@^3.8.3:
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.8.3.tgz#608d71f12584a1e898e60db5c4a61933bd7044bd"
+  version "3.9.6"
+  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.9.6.tgz#2f9b2fd0d82802dcd872e1011869ba8ae6b74778"
+  dependencies:
+    acorn "^8.7.0"
+    acorn-walk "^8.2.0"
